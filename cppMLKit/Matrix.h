@@ -49,6 +49,22 @@ public:
     size_t getRows() const {return rows;}
     size_t getCols() const {return cols;}
 
+    template <typename U>
+    U getOneCol(unsigned int col) const {
+        assert(col< cols);
+        U ret(rows,0);
+        for(int i=0; i<rows; ++i){
+            ret[i] = data[i][col];
+        }
+        return ret;
+    }
+
+    template <typename U>
+    void push_back(MyVector<U>& val) {
+        data.push_back(val);
+        rows++;
+    }
+
     Matrix transpose() const {
 
         Matrix mT (cols, rows);

@@ -1,5 +1,5 @@
 /*
- * test.cpp
+ * testDecisionTree.cpp
  *
  * Copyright (C) 2019 Jingying Li<jyli1230@gmail.com>
  *
@@ -17,5 +17,29 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+#include <cppMLKit/DecicionTree.h>
 
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main(){
+    cout<<"loading testSetIn.txt ... ";
+    string filePath = "../data/data_decisionTree.txt";
+    DecisionTree tree;
+    tree.loadData(filePath);
+    cout<<"loading finished!"<<endl;
+    Matrix<int> ret = tree.getTrainDataMat();
+    int m = ret.getRows(), n = ret.getCols();
+
+    tree.buildTree(tree.getTrainDataMat(), tree.getAttrVec());
+
+    vector<vector<string>> input ={{"rainy","69","92","TRUE"}};
+    vector<string> ans = tree.predict(input);
+    for(int i=0; i<ans.size(); ++i)
+        cout<<ans[i]<<endl;
+
+    return 0;
+}
 

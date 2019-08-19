@@ -24,6 +24,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <sstream>
 
 template <typename T>
 class MyVector : public std::vector<T>
@@ -126,6 +127,41 @@ std::istream& operator >> (std::istream& in, MyVector<T>& vec)
             exit(0);
         }
     }
+
+    return in;
+}
+
+template <>
+inline std::istream& operator >> <std::string>(std::istream& in, MyVector<std::string>& vec)
+{
+    vec.clear();
+    char comma = 0;
+    std::stringstream ss;
+    std::string line;
+    in>>line;
+    ss.str(line);
+    char delim = ',';
+    std::string item;
+    while(getline(ss,item,delim)){
+        vec.push_back(item);
+    }
+
+    /*while (in>>val) {
+        //std:: cout<<val<<std:: endl;
+        vec.push_back(val);
+
+        if (!(in.get(comma))) {
+            break;
+        }
+        //std:: cout<<comma<<std:: endl;
+        if (comma == 0 || comma == 13 || comma =='\n') {
+            break;
+        }
+        if (comma != ',') {
+            std::cerr << "Data must be splited by comma!" << std::endl;
+            exit(0);
+        }
+    }*/
 
     return in;
 }
